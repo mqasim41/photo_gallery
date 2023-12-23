@@ -80,4 +80,38 @@ export const Login = (props) => {
   );
 };
 
+// export const Login = (props) => {
+//     const [currentForm, setCurrentForm] = useState('login');
+//     const navigate = useNavigate();
+//     const toggleForm = (formName) => {
+//         setCurrentForm(formName);
+//     }
+//     const [email, setEmail] = useState('');
+//     const [pass, setPass] = useState('');
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         console.log("login successful");
+//         navigate("/gallery");
+//     }
+
+//     const goRegister = (e) => {
+//         navigate("/register")
+//     }
+
+//     return (
+//         <div className="App auth-form-container">
+//             <h2>Login</h2>
+//             <form className="login-form" onSubmit={handleSubmit}>
+//                 <label htmlFor="email">email</label>
+//                 <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+//                 <label htmlFor="password">password</label>
+//                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+//                 <button type="submit">Log In</button>
+//             </form>
+//             <button className="link-btn" onClick={goRegister}>Don't have an account? Register here.</button>
+//         </div>
+//     )
+
+// }
 export default Login;
+
