@@ -37,7 +37,7 @@
 
 .image-item:hover {
   transform: scale(1.05);
-  border: 1px solid white;
+  
   transition-duration: 1s;
 }
 

@@ -20,6 +20,26 @@ export const Gallery = (props) => {
     // Add more image URLs as needed
   ]);
   const [selectedImage, setSelectedImage] = useState(null);
+   const [selectedImages, setSelectedImages] = useState([]);
+
+    const toggleImageSelection = (imageUrl) => 
+    {
+	    if (selectedImages.includes(imageUrl)) 
+	    {
+	      setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
+	    } else 
+	    {
+	      setSelectedImages([...selectedImages, imageUrl]);
+	    }
+ 	};
+
+ 	  const deleteSelectedImages = () => {
+    const updatedImages = images.filter(
+      (imageUrl) => !selectedImages.includes(imageUrl)
+    );
+    setImages(updatedImages);
+    setSelectedImages([]);
+  };
 
    const handleFileSelect = (event) => {
     const selectedFiles = event.target.files;
@@ -138,15 +158,29 @@ export const Gallery = (props) => {
             onChange={handleFileSelect}
           />
         </label>
+
+        {selectedImages.length > 0 && (
+          <button className="delete-btn" onClick={deleteSelectedImages}>
+            Delete Selected
+          </button>
+        )}
       </div>
       <div className="image-container">
         {images.map((imageUrl, index) => (
           <div key={index} className="image-item">
+          <label>
+              <input
+                type="checkbox"
+                checked={selectedImages.includes(imageUrl)}
+                onChange={() => toggleImageSelection(imageUrl)}
+              />
             <img
               src={imageUrl}
               alt={`Image ${index + 1}`}
               onClick={() => handleImageClick(imageUrl)}
             />
+            </label>
+
           </div>
         ))}
       </div>
