@@ -50,7 +50,7 @@ export const Register = (props) => {
   };
 
   return (
-    <div className="auth-form-container">
+    <div className="App auth-form-container">
       <h2>Register</h2>
       <form className="register-form" onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name</label>
