@@ -1,0 +1,22 @@
+
+{
+    "successfulLogin": {
+      "status": "success",
+      "message": "Registration successful",
+      "data": {
+        "userId": "123",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com"
+      }
+    },
+    "failedLogin": {
+      "status": "error",
+      "message": "Registration failed",
+      "error": {
+        "code": "EMAIL_ALREADY_REGISTERED",
+        "description": "The email address is already registered."
+      }
+    }
+  }
+  
