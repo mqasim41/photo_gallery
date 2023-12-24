@@ -47,7 +47,7 @@ export const Register = (props) => {
 
   const navigateToLogin = () => {
     // Use navigate to navigate to the '/login' route
-    navigate('/');
+    navigate('/login');
   };
 
   return (
