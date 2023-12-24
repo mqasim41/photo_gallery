@@ -6,11 +6,12 @@ import { getPhotos } from "../scripts/get_photos.js";
 import { openImageEditor } from "../scripts/open_image.js";
 import { uploadPhotos } from '../scripts/upload_photos.js';
 import { deletePhotos } from '../scripts/delete_photos.js';
+import { logout } from '../scripts/logout.js';
 
 const Gallery = (props) => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]); // Initialize with an empty array
-
+  // eslint-disable-next-line
   const fetchData = async () => {
     try {
       await getMe();
@@ -27,11 +28,20 @@ const Gallery = (props) => {
   };
 
   useEffect(() => {
+    
     fetchData().then((result) => {
-      const imageUrlArray = result.data.allPhotos;
-      setImages(imageUrlArray);
+      try{
+        const imageUrlArray = result.data.allPhotos;
+
+        setImages(imageUrlArray);
+      }
+      catch(e){
+        alert('You have been logged out.');
+        navigate('/login');
+      }
+      
     });
-  }, [navigate]);
+  }, [fetchData, navigate]);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -54,6 +64,12 @@ const Gallery = (props) => {
     await deletePhotos(selectedImages);
     setSelectedImages([]);
   };
+
+  const logoutUser = async () => {
+    const userId = localStorage.getItem('userId');
+    logout(userId);
+    navigate('/login')
+  } 
 
   const handleFileSelect = async (event) => {
     const selectedFiles = event.target.files;
@@ -97,7 +113,7 @@ const Gallery = (props) => {
    return (
     <div className="container-fluid photo-gallery  ">
       <div className="col-12 d-flex justify-content-end">
-          <button className='btn-primary-outline' style={{width:'100px'}}>Logout</button>
+          <button className='btn-primary-outline' style={{width:'100px'}} onClick={logoutUser}>Logout</button>
         </div>
       <div className='row justify-content-end'>
         
@@ -143,7 +159,7 @@ const Gallery = (props) => {
               <img
                 id={image.id}
                 src={image.url}
-                alt={`Image ${index + 1}`}
+                alt=''
                 onClick={() => handleImageClick(image.url, image.id)}
               />
             </label>

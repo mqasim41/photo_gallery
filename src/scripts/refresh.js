@@ -42,6 +42,7 @@ async function reToken() {
     } catch (error) {
       // Handle fetch or JSON parsing errors
       console.error('Refresh Token API Request Error:', error.message);
+      throw error;
     }
   }
   

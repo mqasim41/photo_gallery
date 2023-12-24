@@ -24,7 +24,7 @@ async function getMe() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+    
       const data = await response.json();
       console.log('API Response:', data);
       return data;
