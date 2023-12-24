@@ -5,26 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { getPhotos } from "../scripts/get_photos.js";
 import { openImageEditor } from "../scripts/open_image.js";
 import { uploadPhotos } from '../scripts/upload_photos.js';
-
-  const [images, setImages] = useState([null]);
-  const [selectedImage, setSelectedImage] = useState(null);
-   const [selectedImages, setSelectedImages] = useState([]);
-
 export const Gallery = (props) => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]); // Initialize with an empty array
 
-  useEffect(() => 
-  {
+  useEffect(() => {
     const fetchData = async () => {
-      try 
-      {
+      try {
         await getMe();
         const data = await getPhotos();
         return data;
-      } 
-      catch (e) 
-      {
+      } catch (e) {
         try {
           await reToken();
         } catch (e) {
@@ -47,16 +38,16 @@ export const Gallery = (props) => {
 
     const toggleImageSelection = (imageUrl) => 
     {
-	    if (selectedImages.includes(imageUrl)) 
-	    {
-	      setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
-	    } else 
-	    {
-	      setSelectedImages([...selectedImages, imageUrl]);
-	    }
- 	 };
+      if (selectedImages.includes(imageUrl)) 
+      {
+        setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
+      } else 
+      {
+        setSelectedImages([...selectedImages, imageUrl]);
+      }
+  };
 
- 	  const deleteSelectedImages = () => {
+    const deleteSelectedImages = () => {
     const updatedImages = images.filter(
       (imageUrl) => !selectedImages.includes(imageUrl)
     );
@@ -83,29 +74,24 @@ export const Gallery = (props) => {
     openImageEditor(imageUrl, imageId);
   };
 
-  useEffect(() => 
-  {
-    const handleResize = () => 
-    {
-      const selectedImageElement = document.querySelector(`img[src="${selectedImage}"]`);
-      if (selectedImageElement) 
-      {
-        const img = new Image();
-        img.src = selectedImageElement.src;
-        img.onload = () => 
-        {
-          const editorWindow = window.open('', 'Image Editor');
-          if (editorWindow) 
-          {
-            editorWindow.resizeTo(img.width, img.height);
-          }
-        };
-      }
-    };
+  useEffect(() => {
+  const handleResize = () => {
+    const selectedImageElement = document.querySelector(`img[src="${selectedImage}"]`);
+    if (selectedImageElement) {
+      const img = new Image();
+      img.src = selectedImageElement.src;
+      img.onload = () => {
+        const editorWindow = window.open('', 'Image Editor');
+        if (editorWindow) {
+          editorWindow.resizeTo(img.width, img.height);
+        }
+      };
+    }
+  };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [selectedImage]);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, [selectedImage]);
 
   return (
     <div className="photo-gallery">
