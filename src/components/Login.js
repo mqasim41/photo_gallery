@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import mockResponses from "../api-mock.json"; // Adjust the path based on your project structure
 
 export const Login = (props) => {
   const navigate = useNavigate();
@@ -11,16 +10,30 @@ export const Login = (props) => {
     e.preventDefault();
 
     try {
-      // Simulate API request (replace this with actual fetch call in production)
-      const response = await simulateApiRequest(email, password);
+      const response = await fetch('http://104.198.137.113:6868/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
 
-      if (response.status === "success") {
-        // Successful login
-        console.log('Login successful:', response);
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log('Login Successful',responseData.data.refreshToken)
+        localStorage.setItem('accessToken', responseData.data.accessToken);
+        localStorage.setItem('refreshToken', responseData.data.refreshToken);
+
         // Redirect or perform other actions upon successful login
-        navigate('/register');
-      } else {
+        navigate('/gallery');
+      } else if (response.status === 400) {
         // Handle errors based on the structure of your API response
+        const invalidCredentials = document.getElementById('invalidCredentials');
+        invalidCredentials.innerText = 'Invalid Credentials';
         console.error('Login failed:', response);
         // You may display an error message to the user
       }
@@ -30,27 +43,13 @@ export const Login = (props) => {
     }
   };
 
-  const simulateApiRequest = async (email, password) => {
-    // Simulate API request logic
-    // In a real application, replace this with an actual fetch call to your backend
-    // For now, use mockResponses to simulate different responses
-
-    // Simulate a successful login
-    if (email === "john.doe@example.com" && password === "password123") {
-      return mockResponses.successfulLogin;
-    }
-
-    // Simulate a failed login (invalid credentials)
-    return mockResponses.failedLogin;
-  };
-
   const navigateToRegister = () => {
     // Use navigate to navigate to the '/register' route
     navigate('/register');
   };
 
   return (
-    <div className="auth-form-container">
+    <div className="App auth-form-container">
       <h2>Login</h2>
       <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
@@ -71,7 +70,8 @@ export const Login = (props) => {
           id="password"
           name="password"
         />
-        <button type="submit" >Log In</button>
+        <div className='mb-1 mt-1' style={{ fontSize: '2.25vh', color: 'red' }} id='invalidCredentials'></div>
+        <button type="submit">Log In</button>
       </form>
       <button className="link-btn" onClick={navigateToRegister}>
         Don't have an account? Click here to register.
@@ -80,38 +80,4 @@ export const Login = (props) => {
   );
 };
 
-// export const Login = (props) => {
-//     const [currentForm, setCurrentForm] = useState('login');
-//     const navigate = useNavigate();
-//     const toggleForm = (formName) => {
-//         setCurrentForm(formName);
-//     }
-//     const [email, setEmail] = useState('');
-//     const [pass, setPass] = useState('');
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         console.log("login successful");
-//         navigate("/gallery");
-//     }
-
-//     const goRegister = (e) => {
-//         navigate("/register")
-//     }
-
-//     return (
-//         <div className="App auth-form-container">
-//             <h2>Login</h2>
-//             <form className="login-form" onSubmit={handleSubmit}>
-//                 <label htmlFor="email">email</label>
-//                 <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
-//                 <label htmlFor="password">password</label>
-//                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-//                 <button type="submit">Log In</button>
-//             </form>
-//             <button className="link-btn" onClick={goRegister}>Don't have an account? Register here.</button>
-//         </div>
-//     )
-
-// }
 export default Login;
-
