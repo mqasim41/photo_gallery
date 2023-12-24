@@ -5,29 +5,29 @@ import { useNavigate } from "react-router-dom";
 import { getPhotos } from "../scripts/get_photos.js";
 import { openImageEditor } from "../scripts/open_image.js";
 import { uploadPhotos } from '../scripts/upload_photos.js';
+import { deletePhotos } from '../scripts/delete_photos.js';
 export const Gallery = (props) => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]); // Initialize with an empty array
-
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
+      await getMe();
+      const data = await getPhotos();
+      return data;
+    } catch (e) {
       try {
-        await getMe();
-        const data = await getPhotos();
-        return data;
+        await reToken();
       } catch (e) {
-        try {
-          await reToken();
-        } catch (e) {
-          alert("Your session has expired.");
-          navigate('/login');
-        }
+        alert("Your session has expired.");
+        navigate('/login');
       }
-    };
+    }
+  };
+  useEffect(() => {
 
     fetchData().then((result)=>{
       const imageUrlArray = result.data.allPhotos;
-      console.log(result.data.allPhotos);
+
       setImages(imageUrlArray);
     });
     
@@ -36,7 +36,7 @@ export const Gallery = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
 
-    const toggleImageSelection = (imageUrl) => 
+    const toggleImageSelection = (imageId) => 
     {
       if (selectedImages.includes(imageUrl)) 
       {
@@ -48,25 +48,31 @@ export const Gallery = (props) => {
       }
   };
 
-    const deleteSelectedImages = () => {
-    const updatedImages = images.filter(
-      (imageUrl) => !selectedImages.includes(imageUrl)
-    );
-    setImages(updatedImages);
+ 	  const deleteSelectedImages = async () => {
+    
+    await deletePhotos(selectedImages);
+    fetchData().then((result)=>{
+      const imageUrlArray = result.data.allPhotos;
+
+      setImages(imageUrlArray);
+    });
     setSelectedImages([]);
   };
 
-  const handleFileSelect = (event) => {
+  const handleFileSelect = async (event) => {
     const selectedFiles = event.target.files;
-  
-    // Map the selected files to an array of objects with 'file' and 'caption' properties
     const uploadedImages = Array.from(selectedFiles).map((file, index) => ({
       file,
-      caption: `Caption for Image ${index + 1}`, // Hardcoded caption
+      caption: `Caption for Image ${index + 1}`, 
     }));
-    
-    // Append the new images to the existing images state
-    uploadPhotos(uploadedImages);
+
+    await uploadPhotos(uploadedImages);
+    console.log("ran");
+    fetchData().then((result)=>{
+      const imageUrlArray = result.data.allPhotos;
+      console.log(imageUrlArray);
+      setImages(imageUrlArray);
+    });
   };
 
 
@@ -122,8 +128,8 @@ export const Gallery = (props) => {
             <label>
               <input
                 type="checkbox"
-                checked={selectedImages.includes(image.url)}
-                onChange={() => toggleImageSelection(image.url)}
+                checked={selectedImages.includes(image.id)}
+                onChange={() => toggleImageSelection(image.id)}
               />
               <img
                 id={image.id}
