@@ -113,26 +113,21 @@ const Gallery = (props) => {
    return (
     <div className="container-fluid photo-gallery  ">
       <div className="col-12 d-flex justify-content-end">
-          <button className='btn-primary-outline' style={{width:'100px'}} onClick={logoutUser}>Logout</button>
-        </div>
-      <div className='row justify-content-end'>
-        
-      <div className="col-12 col-md-4 d-flex justify-content-end mt-3">
+          <button className='btn1 mx-3'  onClick={logoutUser}>Logout</button>
           {selectedImages.length > 0 && (
-            <button className="btn-primary-outline " style={{width:'100px'}} onClick={deleteSelectedImages}>
+            <button className="btn1" onClick={deleteSelectedImages}>
               Delete 
             </button>
           )}
-      </div>
-      </div>
-      <div className="row gallery-title d-flex justify-content-start">
+        </div>
+            <div className="row gallery-title d-flex justify-content-start">
         <div className="col-12">
-          <h1 className="text-center">Photo Gallery</h1>
+          <h2 className="text-center display-1">Photo Gallery</h2>
         </div>
         
       </div>
-      <div className='row mb-3 mt-4 justify-content-center'>
-      <div className="col-12 col-md-8 d-flex justify-content-center ">
+      <div className='row m-4 justify-content-end'>
+      <div className="col-12 col-md-8 d-flex justify-content-end ">
           <label htmlFor="fileInput" className="add-btn upload-button">
             +
             <input
@@ -152,7 +147,7 @@ const Gallery = (props) => {
           <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 image-item">
             <label>
               <input
-                type="checkbox"
+                type="checkbox" className="styled-checkbox"
                 checked={selectedImages.includes(image.id)}
                 onChange={() => toggleImageSelection(image.id)}
               />
