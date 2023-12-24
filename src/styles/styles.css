@@ -1,13 +1,12 @@
 .photo-gallery {
   background-image: linear-gradient(99deg, #C66FBC, #7439db 48%, #F7944D);
   color: ivory;
-  max-width: 1200px; /* Set maximum width for the gallery */
+  max-width: 100vw; /* Set maximum width for the gallery */
   margin: 0 auto; /* Center the gallery horizontally */
   padding: 20px; /* Add some padding */
 }
 
 .gallery-title {
-  margin-bottom: 20px; /* Separate the title from images */
   display:flex;
   justify-content: space-between;
 
@@ -17,7 +16,7 @@
 {
 	font-size: 3rem;
 	background-color: white;
-	padding:0rem 2rem;
+	padding:0rem 1.5rem 0.3rem;
 	border-radius: 50%;
 	color: #C66FBC;
 }
@@ -26,6 +25,7 @@
   display: flex;
   flex-wrap: wrap; /* Allow images to wrap to the next row */
   gap: 10px; /* Adjust the gap between images */
+  min-height:100vh;
 }
 
 .image-item {

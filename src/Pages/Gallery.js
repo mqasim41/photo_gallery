@@ -41,7 +41,8 @@ export const Gallery = (props) => {
       if (selectedImages.includes(imageUrl)) 
       {
         setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
-      } else 
+      } 
+      else 
       {
         setSelectedImages([...selectedImages, imageUrl]);
       }
