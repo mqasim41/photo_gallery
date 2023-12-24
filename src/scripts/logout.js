@@ -1,5 +1,5 @@
 async function logout(userId) {
-    const apiUrl = 'http://104.198.137.113:6869/logout'; // Replace {{url}} with your actual API URL
+    const apiUrl = 'http://104.198.137.113:6868/logout'; // Replace {{url}} with your actual API URL
   
     const requestOptions = {
       method: 'POST',

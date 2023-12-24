@@ -24,7 +24,8 @@ export const Login = (props) => {
       const responseData = await response.json();
 
       if (response.ok) {
-        console.log('Login Successful',responseData.data.refreshToken)
+        console.log('Login Successful',responseData.data)
+        localStorage.setItem('userId', responseData.data.id);
         localStorage.setItem('accessToken', responseData.data.accessToken);
         localStorage.setItem('refreshToken', responseData.data.refreshToken);
 

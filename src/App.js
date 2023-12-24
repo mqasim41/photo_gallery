@@ -16,6 +16,7 @@ class App extends Component {
     return (      
       <BrowserRouter>
         <Routes>
+          <Route exact path="/*" element={<Login/>}/>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
           <Route path="/gallery" element={<Gallery/>}/>
