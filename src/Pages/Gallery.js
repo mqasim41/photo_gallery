@@ -38,24 +38,24 @@ export const Gallery = (props) => {
 
     const toggleImageSelection = (imageId) => 
     {
-      if (selectedImages.includes(imageUrl)) 
+      if (selectedImages.includes(imageId)) 
       {
-        setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
+        setSelectedImages(selectedImages.filter((img) => img !== imageId));
       } 
       else 
       {
-        setSelectedImages([...selectedImages, imageUrl]);
+        setSelectedImages([...selectedImages, imageId]);
       }
   };
+  function filterObjectsByIds(objectsArray, idArray) {
+    return objectsArray.filter(obj => !idArray.includes(obj.id));
+  }
 
  	  const deleteSelectedImages = async () => {
-    
+    const updatedImages = filterObjectsByIds(images, selectedImages);
+    setImages(updatedImages);
     await deletePhotos(selectedImages);
-    fetchData().then((result)=>{
-      const imageUrlArray = result.data.allPhotos;
 
-      setImages(imageUrlArray);
-    });
     setSelectedImages([]);
   };
 
@@ -65,10 +65,10 @@ export const Gallery = (props) => {
       file,
       caption: `Caption for Image ${index + 1}`, 
     }));
-
+    
     await uploadPhotos(uploadedImages);
-    console.log("ran");
-    fetchData().then((result)=>{
+   
+    await fetchData().then((result)=>{
       const imageUrlArray = result.data.allPhotos;
       console.log(imageUrlArray);
       setImages(imageUrlArray);
@@ -114,13 +114,17 @@ export const Gallery = (props) => {
             multiple
             onChange={handleFileSelect}
           />
+          
         </label>
 
         {selectedImages.length > 0 && (
           <button className="delete-btn" onClick={deleteSelectedImages}>
             Delete Selected
           </button>
+          
+          
         )}
+        
       </div>
       <div className="image-container">
         {images.map((image, index) => (
