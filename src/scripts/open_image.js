@@ -1,4 +1,4 @@
-import { updatePhoto } from './update_photo'; // Import the function that handles the API call
+import { updatePhoto } from './update_photo';
 
 function openImageEditor(imageUrl, id) {
   if (imageUrl) {
@@ -28,22 +28,23 @@ function openImageEditor(imageUrl, id) {
 
       if (editorWindow) {
         editorWindow.document.head.innerHTML = `
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
           <style>
+            .editor-content {
+              padding: 20px;
+              text-align: center;
+            }
+
             .edit-btn {
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              border: none;
-              background-color: black;
+              margin-top: 10px;
+              background-color: #007bff;
               color: white;
               cursor: pointer;
-              padding: 10px 15px;
-              border-radius: 0.5rem;
             }
 
             img {
               max-width: 100%;
-              max-height: 100%;
+              max-height: 80vh;
               height: auto;
               width: auto;
               margin: 0;
@@ -54,9 +55,9 @@ function openImageEditor(imageUrl, id) {
           <div class="editor-content">
             <h2>Edit Image</h2>
             <h2>Delete</h2>
-            <img src="${imageUrl}" alt="Selected" style="width: ${newWidth}px; height: ${newHeight}px;">
-            <input type="file" id="fileInput" />
-            <button class="edit-btn" id="updateButton">Update</button>
+            <img src="${imageUrl}" alt="Selected" class="img-fluid">
+            <input type="file" id="fileInput" class="mt-3 mb-3">
+            <button class="btn btn-primary edit-btn" id="updateButton">Update</button>
           </div>
         `;
 
