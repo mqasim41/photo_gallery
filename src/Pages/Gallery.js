@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from 'react';
-
+import { getMe } from "../scripts/get_me.js";
+import { reToken } from "../scripts/refresh.js";
+import { useNavigate } from "react-router-dom";
+import { getPhotos } from "../scripts/get_photos.js";
+import { openImageEditor } from "../scripts/open_image.js";
+import { updatePhoto } from '../scripts/update_photo.js';
 export const Gallery = (props) => {
-    const [images, setImages] = useState([
-    'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    // Add more image URLs as needed
-  ]);
+  const navigate = useNavigate();
+  const [images, setImages] = useState([]); // Initialize with an empty array
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await getMe();
+        const data = await getPhotos();
+        return data;
+      } catch (e) {
+        try {
+          await reToken();
+        } catch (e) {
+          alert("Your session has expired.");
+          navigate('/login');
+        }
+      }
+    };
+
+    fetchData().then((result)=>{
+      const imageUrlArray = result.data.allPhotos.map(image => image.url);
+      console.log(result.data.allPhotos);
+      setImages(imageUrlArray);
+    });
+    
+  }, [navigate]);
+ 
   const [selectedImage, setSelectedImage] = useState(null);
-   const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
 
     const toggleImageSelection = (imageUrl) => 
     {
@@ -49,75 +63,6 @@ export const Gallery = (props) => {
     setImages([...images, ...uploadedImages]);
   };
 
-  const openImageEditor = (imageUrl) => {
-  if (imageUrl) {
-    const img = new Image();
-    img.src = imageUrl;
-
-    img.onload = () => {
-      const maxWidth = window.innerWidth * 0.9; // Set the maximum width as 90% of window width
-      const maxHeight = window.innerHeight * 0.9; // Set the maximum height as 90% of window height
-
-      const aspectRatio = img.width / img.height;
-
-      let newWidth = img.width;
-      let newHeight = img.height;
-
-      // Adjust image dimensions if they exceed the maximum width or height
-      if (newWidth > maxWidth) {
-        newWidth = maxWidth;
-        newHeight = newWidth / aspectRatio;
-      }
-      if (newHeight > maxHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-      }
-
-      const left = (window.innerWidth - newWidth) / 2;
-      const top = (window.innerHeight - newHeight) / 2;
-
-      const editorWindow = window.open('', 'Image Editor', `width=${newWidth},height=${newHeight},left=${left},top=${top}`);
-
-      if (editorWindow) {
-        editorWindow.document.head.innerHTML = `
-          <style>
-            /* Existing styles remain unchanged */
-            .edit-btn {
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              border: none;
-              background-color: black;
-              color: white;
-              cursor: pointer;
-              padding: 10px 15px;
-              border-radius:0.5rem;
-            }
-
-            img {
-              max-width: 100%;
-              max-height: 100%;
-              height: auto;
-              width: auto;
-              margin: 0;
-            }
-          </style>
-        `;
-        editorWindow.document.body.innerHTML = `
-          <div class="editor-content">
-            <h2>Edit Image</h2>
-            <h2>Delete</h2>
-            <img src="${imageUrl}" alt="Selected" style="width: ${newWidth}px; height: ${newHeight}px;">
-            <button class="edit-btn">Edit</button>
-          </div>
-        `;
-      } else {
-        alert('Please allow pop-ups to use the image editor.');
-      }
-    };
-  
-    }
-  };
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);

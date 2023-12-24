@@ -12,7 +12,7 @@ export const Register = (props) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('YOUR_BACKEND_API_REGISTER_ENDPOINT', {
+      const response = await fetch('http://104.198.137.113:6868/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,6 +29,7 @@ export const Register = (props) => {
         
         const data = await response.json();
         console.log('Registration successful:', data);
+        navigate('/login');
 
         
         navigate('/');
@@ -63,7 +64,7 @@ export const Register = (props) => {
         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
         
         <label htmlFor="password">Password</label>
-        <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+        <input className='mb-1' value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
         
         <button type="submit">Register</button>
       </form>

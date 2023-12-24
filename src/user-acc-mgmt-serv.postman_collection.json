@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "81cfcd4e-95ad-432c-8b71-5beac8b851c8",
+		"name": "user-acc-mgmt-serv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28136407",
+		"_collection_link": "https://lively-shadow-402538.postman.co/workspace/My-Workspace~793bbd99-c477-46e1-86b3-ee6df49e770f/collection/28136407-81cfcd4e-95ad-432c-8b71-5beac8b851c8?action=share&source=collection_link&creator=28136407"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"zainab.saad567@gmail.com\",\r\n    \"password\": \"zainab1234\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"zainab.saad567@gmail.com\",\r\n    \"password\": \"zainab1234\",\r\n    \"firstName\": \"Zainab\",\r\n    \"lastName\": \"Saad\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImp3dGlkIjoiMzBiY2U5ZTctMTgxZC00OWY3LTgwMzgtMDBhMzFkY2ZmOWY1IiwiaWF0IjoxNzAzMzY4ODAyLCJleHAiOjE3MDM0NTUyMDJ9.u4edWXywBEI1S8nIB5E1n-pn1bp5eh8yFNSHCLbhgbE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/refresh-token",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/logout",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-me",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzM2ODgwMiwiZXhwIjoxNzAzMzY5MTAyfQ.FvJFsfsIkEcup2LwCic9zXnaUbpcmGUk2x6HRsvwalY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/get-me",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get-me"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

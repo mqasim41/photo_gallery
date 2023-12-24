@@ -7,6 +7,8 @@ import Register from './components/Register'
 import Gallery from './Pages/Gallery';
 import './styles/App.css';
 import "./styles/styles.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class App extends Component {
   render()

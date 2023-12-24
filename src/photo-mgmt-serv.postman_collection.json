@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "145e03f4-e6e0-4618-bb00-5522d6c083f5",
+		"name": "photo-mgmt-serv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28136407",
+		"_collection_link": "https://lively-shadow-402538.postman.co/workspace/My-Workspace~793bbd99-c477-46e1-86b3-ee6df49e770f/collection/28136407-145e03f4-e6e0-4618-bb00-5522d6c083f5?action=share&source=collection_link&creator=28136407"
+	},
+	"item": [
+		{
+			"name": "upload",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzM3MDc1MiwiZXhwIjoxNzAzMzcxMDUyfQ.rThn6a80Bbi9oVl0pok0bpgicglg_mf5QtFLdl3bgGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/zaina/OneDrive/Pictures/Pics/05db251a95bb75391643a4193a84c64b.jpg"
+						},
+						{
+							"key": "captions",
+							"value": "I love this photo so much ",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/zaina/OneDrive/Desktop/05db251a95bb75391643a4193a84c64b_1703323075678.jpg"
+						},
+						{
+							"key": "captions",
+							"value": "I am so bad at this stuff",
+							"type": "text"
+						},
+						{
+							"key": "captions",
+							"value": "null",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/zaina/OneDrive/Desktop/05db251a95bb75391643a4193a84c64b_1703323075678.jpg"
+						},
+						{
+							"key": "captions",
+							"value": "i am burhhh",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://104.198.137.113:6869/upload",
+					"protocol": "http",
+					"host": [
+						"104",
+						"198",
+						"137",
+						"113"
+					],
+					"port": "6869",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzM3MDc1MiwiZXhwIjoxNzAzMzcxMDUyfQ.rThn6a80Bbi9oVl0pok0bpgicglg_mf5QtFLdl3bgGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": [\r\n        4, 5, 6, 7\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://104.198.137.113:6869/delete",
+					"protocol": "http",
+					"host": [
+						"104",
+						"198",
+						"137",
+						"113"
+					],
+					"port": "6869",
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "my-photos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzM3MDc1MiwiZXhwIjoxNzAzMzcxMDUyfQ.rThn6a80Bbi9oVl0pok0bpgicglg_mf5QtFLdl3bgGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://104.198.137.113:6869/my-photos",
+					"protocol": "http",
+					"host": [
+						"104",
+						"198",
+						"137",
+						"113"
+					],
+					"port": "6869",
+					"path": [
+						"my-photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-photo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzM3MDc1MiwiZXhwIjoxNzAzMzcxMDUyfQ.rThn6a80Bbi9oVl0pok0bpgicglg_mf5QtFLdl3bgGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/zaina/OneDrive/Pictures/Pics/1600w-oEqs2yqaL8s.webp"
+						},
+						{
+							"key": "id",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "caption",
+							"value": "i hate this photo, not anymore",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://104.198.137.113:6869/update-photo",
+					"protocol": "http",
+					"host": [
+						"104",
+						"198",
+						"137",
+						"113"
+					],
+					"port": "6869",
+					"path": [
+						"update-photo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
