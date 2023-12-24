@@ -4,22 +4,15 @@ import { reToken } from "../scripts/refresh.js";
 import { useNavigate } from "react-router-dom";
 import { getPhotos } from "../scripts/get_photos.js";
 import { openImageEditor } from "../scripts/open_image.js";
-import { updatePhoto } from '../scripts/update_photo.js';
-import { upload } from '../scripts/upload.js';
-export const Gallery = (props) => 
-{
-  //   const [images, setImages] = useState([
-  //   'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-  //   'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //   'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //   'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-  //   'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //   // Add more image URLs as needed
-  // ]);
- const [images, setImages] = useState([null]);
+import { uploadPhotos } from '../scripts/upload_photos.js';
+
+  const [images, setImages] = useState([null]);
   const [selectedImage, setSelectedImage] = useState(null);
    const [selectedImages, setSelectedImages] = useState([]);
+
+export const Gallery = (props) => {
   const navigate = useNavigate();
+  const [images, setImages] = useState([]); // Initialize with an empty array
 
   useEffect(() => 
   {
@@ -41,53 +34,53 @@ export const Gallery = (props) =>
       }
     };
 
-    fetchData().then((result)=>
-    {
-      const imageUrlArray = result.data.allPhotos.map(image => image.url);
+    fetchData().then((result)=>{
+      const imageUrlArray = result.data.allPhotos;
       console.log(result.data.allPhotos);
       setImages(imageUrlArray);
     });
     
   }, [navigate]);
  
-  
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+
     const toggleImageSelection = (imageUrl) => 
     {
-      if (selectedImages.includes(imageUrl)) 
-      {
-        setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
-      } else 
-      {
-        setSelectedImages([...selectedImages, imageUrl]);
-      }
+	    if (selectedImages.includes(imageUrl)) 
+	    {
+	      setSelectedImages(selectedImages.filter((img) => img !== imageUrl));
+	    } else 
+	    {
+	      setSelectedImages([...selectedImages, imageUrl]);
+	    }
+ 	 };
+
+ 	  const deleteSelectedImages = () => {
+    const updatedImages = images.filter(
+      (imageUrl) => !selectedImages.includes(imageUrl)
+    );
+    setImages(updatedImages);
+    setSelectedImages([]);
   };
 
-  const deleteSelectedImages = () => 
-  {
-      const updatedImages = images.filter(
-        (imageUrl) => !selectedImages.includes(imageUrl)
-      );
-      setImages(updatedImages);
-      setSelectedImages([]);
-  };
+  const handleFileSelect = (event) => {
+    const selectedFiles = event.target.files;
   
+    // Map the selected files to an array of objects with 'file' and 'caption' properties
+    const uploadedImages = Array.from(selectedFiles).map((file, index) => ({
+      file,
+      caption: `Caption for Image ${index + 1}`, // Hardcoded caption
+    }));
+    
+    // Append the new images to the existing images state
+    uploadPhotos(uploadedImages);
+  };
 
-   const handleFileSelect = (event) => 
-   {
-      const selectedFiles = event.target.files;
-      const files = Array.from(selectedFiles);
-      const uploadedImages = Array.from(selectedFiles).map((file) =>
-        URL.createObjectURL(file)
-      );
-      upload(files);
-      setImages([...images, ...uploadedImages]);
-      //uploadImages(selectedFiles);
-   };
 
-  const handleImageClick = (imageUrl) => 
-  {
+  const handleImageClick = (imageUrl, imageId) => {
     setSelectedImage(imageUrl);
-    openImageEditor(imageUrl);
+    openImageEditor(imageUrl, imageId);
   };
 
   useEffect(() => 
@@ -137,23 +130,25 @@ export const Gallery = (props) =>
         )}
       </div>
       <div className="image-container">
-        {images.map((imageUrl, index) => (
+        {images.map((image, index) => (
           <div key={index} className="image-item">
-          <label>
+            <label>
               <input
                 type="checkbox"
-                checked={selectedImages.includes(imageUrl)}
-                onChange={() => toggleImageSelection(imageUrl)}
+                checked={selectedImages.includes(image.url)}
+                onChange={() => toggleImageSelection(image.url)}
               />
-            <img
-              src={imageUrl}
-              alt={`Image ${index + 1}`}
-              onClick={() => handleImageClick(imageUrl)}
-            />
+              <img
+                id={image.id}
+                src={image.url}
+                alt={`Image ${index + 1}`}
+                onClick={() => handleImageClick(image.url, image.id)}
+              />
             </label>
           </div>
         ))}
       </div>
+
     </div>
   );
 };
