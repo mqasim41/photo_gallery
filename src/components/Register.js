@@ -12,7 +12,7 @@ export const Register = (props) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://104.198.137.113:6868/register', {
+      const response = await fetch('http://34.69.126.218:6868/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

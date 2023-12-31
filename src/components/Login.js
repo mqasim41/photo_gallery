@@ -10,7 +10,7 @@ export const Login = (props) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://104.198.137.113:6868/login', {
+      const response = await fetch('http://34.69.126.218:6868/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

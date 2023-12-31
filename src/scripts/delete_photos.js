@@ -1,5 +1,5 @@
 const deletePhotos = async (photoIds) => {
-    const apiUrl = 'http://104.198.137.113:6869/delete';
+    const apiUrl = 'http://34.69.126.218:6869/delete';
     const accessToken = localStorage.getItem('accessToken');
   
     const requestOptions = {

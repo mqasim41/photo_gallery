@@ -1,5 +1,5 @@
 async function updatePhoto(id, file, caption) {
-    const apiUrl = 'http://104.198.137.113:6869/update-photo';
+    const apiUrl = 'http://34.69.126.218:6869/update-photos';
     const accessToken = localStorage.getItem('accessToken');
   
     // Create form data
