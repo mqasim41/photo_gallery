@@ -14,6 +14,7 @@ const uploadPhotos = async (selectedFiles) => {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
+      credentials: 'include',
       body: formData,
     };
   

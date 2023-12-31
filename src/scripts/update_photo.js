@@ -13,6 +13,7 @@ async function updatePhoto(id, file, caption) {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
+      credentials: 'include',
       body: formData,
     };
   

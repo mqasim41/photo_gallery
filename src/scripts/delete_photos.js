@@ -8,6 +8,7 @@ const deletePhotos = async (photoIds) => {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({
         id: photoIds,
       }),
