@@ -7,7 +7,7 @@ async function reToken() {
       return;
     }
   
-    const apiUrl = 'http://104.198.137.113:6868';
+    const apiUrl = 'http://34.66.223.9:6868';
     const endpoint = '/refresh-token';
     const url = `${apiUrl}${endpoint}`;
   

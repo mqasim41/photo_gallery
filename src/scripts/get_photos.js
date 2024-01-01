@@ -1,5 +1,5 @@
 async function getPhotos() {
-  const apiUrl = 'http://34.69.126.218:6869/my-photos';
+  const apiUrl = 'http://34.66.223.9:6869/my-photos';
   const accessToken = localStorage.getItem('accessToken');
 
   const requestOptions = {

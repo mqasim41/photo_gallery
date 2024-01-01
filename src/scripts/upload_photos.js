@@ -1,5 +1,5 @@
 const uploadPhotos = async (selectedFiles) => {
-    const apiUrl = 'http://34.69.126.218:6869/upload';
+    const apiUrl = 'http://34.66.223.9:6869/upload';
     const accessToken = localStorage.getItem('accessToken');
   
     const formData = new FormData();

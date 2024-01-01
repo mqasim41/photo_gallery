@@ -7,7 +7,7 @@ async function getMe() {
       return Promise.reject(new Error('Access token not found in localStorage'));
     }
   
-    const apiUrl = 'http://34.69.126.218:6868';
+    const apiUrl = 'http://34.66.223.9:6868';
     const endpoint = '/get-me';
     const url = `${apiUrl}${endpoint}`;
     const requestOptions = {
