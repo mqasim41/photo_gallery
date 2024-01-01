@@ -17,6 +17,7 @@ export const Register = (props) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials:include,
         body: JSON.stringify({
           firstName,
           lastName,
